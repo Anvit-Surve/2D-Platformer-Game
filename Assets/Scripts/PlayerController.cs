@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Animator animator;
+    public float speed;
     //private void Awake()
     //{
     //    Debug.Log("Player Controller Awake");
@@ -18,32 +19,22 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //Run Script
-        float speed = Input.GetAxisRaw("Horizontal");
-        animator.SetFloat("Speed", Mathf.Abs(speed));
-        Vector3 scale = transform.localScale;
-        if (speed < 0)
-        {
-            scale.x = -1f * Mathf.Abs(scale.x);
-        }
-        else if (speed > 0)
-        {
-            scale.x = Mathf.Abs(scale.x);
-        }
-        transform.localScale = scale;
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        MoveCharacter(horizontal);
+        PlayMovementAnimation(horizontal);
+        PlayCrouchAnimation();
+        PlayJumpAnimation();
+    }
 
-        //Crouch Script
-        bool Crouch = Input.GetKey(KeyCode.LeftControl);
-        if (Crouch)
-        {
-            animator.SetBool("Crouch", true);
-        }
-        else
-        {
-            animator.SetBool("Crouch", false);
-        }
+    private void MoveCharacter(float horizontal)
+    {
+        Vector2 position = transform.position;
+        position.x += horizontal * speed * Time.deltaTime;
+        transform.position = position;
+    }
 
-        //Jump Script
+    private void PlayJumpAnimation()
+    {
         float vertical = Input.GetAxisRaw("Vertical");
         if (vertical > 0)
         {
@@ -59,5 +50,33 @@ public class PlayerController : MonoBehaviour
         //{
         //    animator.SetBool("Jump", true);
         //}
+    }
+
+    private void PlayCrouchAnimation()
+    {
+        bool Crouch = Input.GetKey(KeyCode.LeftControl);
+        if (Crouch)
+        {
+            animator.SetBool("Crouch", true);
+        }
+        else
+        {
+            animator.SetBool("Crouch", false);
+        }
+    }
+
+    private void PlayMovementAnimation(float horizontal)
+    {
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        Vector3 scale = transform.localScale;
+        if (horizontal < 0)
+        {
+            scale.x = -1f * Mathf.Abs(scale.x);
+        }
+        else if (horizontal > 0)
+        {
+            scale.x = Mathf.Abs(scale.x);
+        }
+        transform.localScale = scale;
     }
 }

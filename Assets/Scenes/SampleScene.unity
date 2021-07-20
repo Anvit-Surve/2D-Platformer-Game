@@ -458,3 +458,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6080532602639362053}
+  speed: 4
