@@ -5,11 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Animator animator;
+    private Rigidbody2D rb2d;
     public float speed;
-    //private void Awake()
-    //{
-    //    Debug.Log("Player Controller Awake");
-    //}
+    public float jump;
+    private void Awake()
+    {
+        Debug.Log("Player Controller Awake");
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
+    }
 
     //private void OnCollisionEnter2D(Collision2D collision)
     //{
@@ -20,22 +23,27 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        MoveCharacter(horizontal);
+        float vertical = Input.GetAxisRaw("Jump");
+        MoveCharacter(horizontal, vertical);
         PlayMovementAnimation(horizontal);
         PlayCrouchAnimation();
-        PlayJumpAnimation();
+        PlayJumpAnimation(vertical);
     }
 
-    private void MoveCharacter(float horizontal)
+    private void MoveCharacter(float horizontal, float vertical)
     {
         Vector2 position = transform.position;
         position.x += horizontal * speed * Time.deltaTime;
         transform.position = position;
+
+        if (vertical > 0)
+        {
+            rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
+        }
     }
 
-    private void PlayJumpAnimation()
+    private void PlayJumpAnimation(float vertical)
     {
-        float vertical = Input.GetAxisRaw("Vertical");
         if (vertical > 0)
         {
             animator.SetBool("Jump", true);
