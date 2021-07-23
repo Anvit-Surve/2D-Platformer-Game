@@ -10,13 +10,8 @@ public class PlayerController : MonoBehaviour
     public float jump;
     private void Awake()
     {
-        Debug.Log("Player Controller Awake");
         rb2d = gameObject.GetComponent<Rigidbody2D>();
     }
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    Debug.Log("Collision: " + collision.gameObject.name);
-    //}
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -44,45 +39,17 @@ public class PlayerController : MonoBehaviour
     }
     private void PlayJumpAnimation(float vertical)
     {
-        //if (vertical > 0)
-        //{
-            animator.SetBool("Jump", vertical > 0);
-        //}
-        //else
-        //{
-        //    animator.SetBool("Jump", false);
-        //}
-
-        //bool Jump = Input.GetKey("space");
-        //if(Jump)
-        //{
-        //    animator.SetBool("Jump", true);
-        //}
+        animator.SetBool("Jump", vertical > 0);        
     }
     private void PlayCrouchAnimation()
     {
-        bool Crouch = Input.GetKey(KeyCode.LeftControl);
-        if (Crouch)
-        {
-            animator.SetBool("Crouch", true);
-        }
-        else
-        {
-            animator.SetBool("Crouch", false);
-        }
+        animator.SetBool("Crouch", Input.GetKey(KeyCode.LeftControl));
     }
     private void PlayMovementAnimation(float horizontal)
     {
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
         Vector3 scale = transform.localScale;
-        if (horizontal < 0)
-        {
-            scale.x = -1f * Mathf.Abs(scale.x);
-        }
-        else if (horizontal > 0)
-        {
-            scale.x = Mathf.Abs(scale.x);
-        }
+        scale.x = (horizontal < 0 ? -1 : (horizontal>0?1:scale.x)) * Mathf.Abs(scale.x);
         transform.localScale = scale;
     }
 }
