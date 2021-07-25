@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
     public float movementSpeed;
     public float jump;
+    public ScoreController scoreController;
     private void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
@@ -20,6 +22,12 @@ public class PlayerController : MonoBehaviour
         PlayMovementAnimation(horizontal);
         PlayCrouchAnimation();
         PlayJumpAnimation(vertical);
+    }
+
+    public void PickUpKey()
+    {
+        Debug.Log("Player Picked Up the Key");
+        scoreController.IncreaseScore(10);
     }
 
     private void Update()
