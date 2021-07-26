@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,10 +11,28 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float jump;
     public ScoreController scoreController;
+    public Health health;
     private void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
     }
+
+    public void HurtPlayer()
+    {
+        //animator.SetBool("Hurt", true);
+        health.ReduceHealth();
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void KillPlayer()
+    {
+        animator.SetBool("Death", true);
+        Invoke("RestartScene", 1.0f);
+    }
+
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -26,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
     public void PickUpKey()
     {
-        Debug.Log("Player Picked Up the Key");
         scoreController.IncreaseScore(10);
     }
 
