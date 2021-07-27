@@ -28,13 +28,13 @@ public class Health : MonoBehaviour
 
     public void ReduceHealth()
     {
-        if(health == 0)
+        if (health == 0)
         {
             playerController.KillPlayer();
         }
         else
         {
-            health = health - 1;
+            health -= 1;
         }
     }
 }

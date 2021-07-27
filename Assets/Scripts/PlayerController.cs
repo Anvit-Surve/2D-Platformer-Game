@@ -12,27 +12,27 @@ public class PlayerController : MonoBehaviour
     public float jump;
     public ScoreController scoreController;
     public Health health;
+
+    public int Restart;
+
     private void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
     }
-
     public void HurtPlayer()
     {
-        //animator.SetBool("Hurt", true);
+        animator.SetBool("Hurt", true);
         health.ReduceHealth();
     }
-
     public void RestartScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(Restart);
     }
     public void KillPlayer()
     {
         animator.SetBool("Death", true);
         Invoke("RestartScene", 1.0f);
     }
-
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -42,12 +42,10 @@ public class PlayerController : MonoBehaviour
         PlayCrouchAnimation();
         PlayJumpAnimation(vertical);
     }
-
     public void PickUpKey()
     {
         scoreController.IncreaseScore(10);
     }
-
     private void Update()
     {
         
@@ -77,5 +75,9 @@ public class PlayerController : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x = (horizontal < 0 ? -1 : (horizontal>0?1:scale.x)) * Mathf.Abs(scale.x);
         transform.localScale = scale;
+    }
+    public void HurtAnimationFalse()
+    {
+        animator.SetBool("Hurt", false);
     }
 }

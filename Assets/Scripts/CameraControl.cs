@@ -10,7 +10,6 @@ public class CameraControl : MonoBehaviour
     public Vector3 offset;
     [Range(1, 10)]
     public float smoothFactor;
-
     void FixedUpdate()
     {
         Follow();
