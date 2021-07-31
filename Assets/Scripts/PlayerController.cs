@@ -11,9 +11,10 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float jump;
     public ScoreController scoreController;
+    public GameOverController gameOverController;
     public Health health;
 
-    public int Restart;
+    //public int Restart;
 
     private void Awake()
     {
@@ -24,14 +25,16 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Hurt", true);
         health.ReduceHealth();
     }
-    public void RestartScene()
-    {
-        SceneManager.LoadScene(Restart);
-    }
+    //public void RestartScene()
+    //{
+    //    SceneManager.LoadScene(Restart);
+    //}
     public void KillPlayer()
     {
         animator.SetBool("Death", true);
-        Invoke("RestartScene", 1.0f);
+        //Invoke("gameOverController.PlayerDied", 1.0f);
+        gameOverController.PlayerDied();
+        this.enabled = false;
     }
     private void FixedUpdate()
     {
