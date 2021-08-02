@@ -17,10 +17,20 @@ namespace Assets.Scripts.Levels
             button = GetComponent<Button>();
             button.onClick.AddListener(OnClick);
         }
-
         private void OnClick()
         {
-            SceneManager.LoadScene(LevelName);
+            LevelStatus levelStatus = LevelManager.Instance.GetlevelStatus(LevelName);
+            switch (levelStatus)
+            {
+                case LevelStatus.Locked:
+                    break;
+                case LevelStatus.Unlocked:
+                    SceneManager.LoadScene(LevelName);
+                    break;
+                case LevelStatus.Completed:
+                    SceneManager.LoadScene(LevelName);
+                    break;
+            }
         }
     }
 }
