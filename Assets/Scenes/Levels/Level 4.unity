@@ -1152,6 +1152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9d598e92812e64992386133af17bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Levelcompletecontroller: {fileID: 0}
 --- !u!1 &484034735
 GameObject:
   m_ObjectHideFlags: 0
@@ -12985,14 +12986,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6598084734991867562}
   m_PrefabAsset: {fileID: 0}
---- !u!81 &6080532603141984380
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6080532603141984381}
-  m_Enabled: 1
 --- !u!1 &6080532603141984381
 GameObject:
   m_ObjectHideFlags: 0
@@ -13003,7 +12996,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6080532603141984385}
   - component: {fileID: 6080532603141984382}
-  - component: {fileID: 6080532603141984380}
   - component: {fileID: 6080532603141984383}
   m_Layer: 0
   m_Name: Main Camera

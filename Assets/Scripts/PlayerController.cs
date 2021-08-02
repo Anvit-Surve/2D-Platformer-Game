@@ -13,9 +13,6 @@ public class PlayerController : MonoBehaviour
     public ScoreController scoreController;
     public GameOverController gameOverController;
     public Health health;
-
-    //public int Restart;
-
     private void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
@@ -25,10 +22,6 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Hurt", true);
         health.ReduceHealth();
     }
-    //public void RestartScene()
-    //{
-    //    SceneManager.LoadScene(Restart);
-    //}
     public void KillPlayer()
     {
         animator.SetBool("Death", true);
@@ -82,5 +75,17 @@ public class PlayerController : MonoBehaviour
     public void HurtAnimationFalse()
     {
         animator.SetBool("Hurt", false);
+    }
+    public void movementSound()
+    {
+        SoundManager.Instance.Play(Sounds.PlayerMove);
+    }
+    public void jumpUpSound()
+    {
+        SoundManager.Instance.Play(Sounds.PlayerJumpUp);
+    }
+    public void jumpDownSound()
+    {
+        SoundManager.Instance.Play(Sounds.PlayerJumpDown);
     }
 }
