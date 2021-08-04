@@ -13,12 +13,24 @@ public class PlayerController : MonoBehaviour
     public ScoreController scoreController;
     public GameOverController gameOverController;
     public Health health;
+    public float recoilForce;
+
+    private int extraJumps;
+    public int extraJumpValue;
+    private bool isGrounded;
+    public Transform groundCheck;
+    public float checkRadius;
+    public LayerMask whatIsGround;
+    private Vector2 lookDir;
+
     private void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
+        extraJumps = extraJumpValue;
     }
     public void HurtPlayer()
     {
+        rb2d.AddForce(-lookDir*recoilForce, ForceMode2D.Impulse);
         animator.SetBool("Hurt", true);
         health.ReduceHealth();
     }
@@ -31,12 +43,13 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
         float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Jump");
-        MoveCharacter(horizontal, vertical);
+        //float vertical = Input.GetAxisRaw("Jump");
+        MoveCharacter(horizontal);
         PlayMovementAnimation(horizontal);
         PlayCrouchAnimation();
-        PlayJumpAnimation(vertical);
+        //PlayJumpAnimation(vertical);
     }
     public void PickUpKey()
     {
@@ -44,22 +57,39 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        bool vertical = Input.GetKeyDown(KeyCode.Space);
+        if (vertical) 
+        {
+            PlayerJump();
+            animator.SetBool("Jump", true);
+        }
+
         
     }
-    private void MoveCharacter(float horizontal, float vertical)
+
+    private void PlayerJump()
+    {
+        if (isGrounded)
+        {
+            extraJumps = 2;
+        }
+        if (extraJumps > 0)
+        {
+            rb2d.velocity = Vector2.up * jump;
+            extraJumps--;
+        }
+        else if (extraJumps == 0 && isGrounded)
+        {
+            rb2d.velocity = Vector2.up * jump;
+        }
+    }
+
+    private void MoveCharacter(float horizontal)
     {
         Vector2 position = transform.position;
         position.x += horizontal * movementSpeed * Time.deltaTime;
         transform.position = position;
-
-        if (vertical > 0)
-        {
-            rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
-        }
-    }
-    private void PlayJumpAnimation(float vertical)
-    {
-        animator.SetBool("Jump", vertical > 0);        
+        lookDir = Camera.main.ScreenToWorldPoint(position);
     }
     private void PlayCrouchAnimation()
     {
@@ -75,6 +105,10 @@ public class PlayerController : MonoBehaviour
     public void HurtAnimationFalse()
     {
         animator.SetBool("Hurt", false);
+    }
+    public void JumpAnimationFalse()
+    {
+        animator.SetBool("Jump", false);
     }
     public void movementSound()
     {

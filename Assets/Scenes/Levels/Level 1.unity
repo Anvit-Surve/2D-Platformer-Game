@@ -815,7 +815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 349641212}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: GroundDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1090,7 +1090,7 @@ GameObject:
   - component: {fileID: 470264185}
   - component: {fileID: 470264186}
   - component: {fileID: 470264187}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LevelComplete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1159,7 +1159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484034736}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: GroundDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1370,7 +1370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 633162717}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: GroundDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10237,7 +10237,7 @@ GameObject:
   - component: {fileID: 1345291130}
   - component: {fileID: 1345291132}
   - component: {fileID: 1345291131}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11413,7 +11413,7 @@ GameObject:
   - component: {fileID: 1576532812}
   - component: {fileID: 1576532811}
   - component: {fileID: 1576532813}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -12405,7 +12405,7 @@ GameObject:
   - component: {fileID: 2074114941}
   - component: {fileID: 2074114940}
   - component: {fileID: 2074114939}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12550,7 +12550,7 @@ GameObject:
   - component: {fileID: 2074969068}
   - component: {fileID: 2074969067}
   - component: {fileID: 2074969066}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy (2)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -12800,6 +12800,11 @@ PrefabInstance:
       propertyPath: emptyhearts.Array.data[2]
       value: 
       objectReference: {fileID: 399778297}
+    - target: {fileID: 2881709187713809796, guid: 91d45218149aeb04dafbea36d554f305,
+        type: 3}
+      propertyPath: recoilForce
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2881709187713809796, guid: 91d45218149aeb04dafbea36d554f305,
         type: 3}
       propertyPath: scoreController
