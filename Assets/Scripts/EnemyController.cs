@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.GetComponent<PlayerController>())
         {
             PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+            playerController.JumpAnimationFalse();
             playerController.HurtPlayer();
         }
     }
@@ -20,7 +21,7 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
-        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, 1f);
+        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, 0.75f);
         if (groundInfo.collider == false)
         {
             if (movingRight)
