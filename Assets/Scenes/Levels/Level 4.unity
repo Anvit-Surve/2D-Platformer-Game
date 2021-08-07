@@ -11315,6 +11315,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1394122397}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1394122399 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3303063548683069370, guid: 846f343e8a31f25448976765d1d80573,
+    type: 3}
+  m_PrefabInstance: {fileID: 1394122397}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f328908dc5073f4f86d9de08dc45095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1523183379
 GameObject:
   m_ObjectHideFlags: 0
@@ -12917,7 +12929,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameOverController
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1394122399}
     - target: {fileID: 3459146278625154005, guid: 91d45218149aeb04dafbea36d554f305,
         type: 3}
       propertyPath: m_RootOrder

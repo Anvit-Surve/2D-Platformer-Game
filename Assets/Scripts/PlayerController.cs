@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public float checkRadius;
     public LayerMask whatIsGround;
     private Vector2 lookDir;
+    private Vector3 scale;
 
     private void Awake()
     {
@@ -30,15 +31,23 @@ public class PlayerController : MonoBehaviour
     }
     public void HurtPlayer()
     {
-        rb2d.AddForce(-lookDir*recoilForce, ForceMode2D.Impulse);
+        scale = transform.localScale;
+        if (scale.x == 1)
+        {
+            rb2d.AddForce(-lookDir * recoilForce, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb2d.AddForce(lookDir * recoilForce, ForceMode2D.Impulse);
+        }
         animator.SetBool("Hurt", true);
         health.ReduceHealth();
     }
     public void KillPlayer()
     {
+        animator.SetBool("Hurt", false);
         animator.SetBool("Death", true);
-        //Invoke("gameOverController.PlayerDied", 1.0f);
-        gameOverController.PlayerDied();
+        Invoke("PlayerDead", 1.0f);
         this.enabled = false;
     }
     private void FixedUpdate()
@@ -98,7 +107,7 @@ public class PlayerController : MonoBehaviour
     private void PlayMovementAnimation(float horizontal)
     {
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        Vector3 scale = transform.localScale;
+        scale = transform.localScale;
         scale.x = (horizontal < 0 ? -1 : (horizontal>0?1:scale.x)) * Mathf.Abs(scale.x);
         transform.localScale = scale;
     }
@@ -121,5 +130,9 @@ public class PlayerController : MonoBehaviour
     public void jumpDownSound()
     {
         SoundManager.Instance.Play(Sounds.PlayerJumpDown);
+    }
+    public void PlayerDead()
+    {
+        gameOverController.PlayerDied();
     }
 }

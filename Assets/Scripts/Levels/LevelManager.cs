@@ -12,7 +12,7 @@ namespace Assets.Scripts.Levels
         public string[] Levels;
         private void Awake()
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
@@ -20,11 +20,16 @@ namespace Assets.Scripts.Levels
             else
             {
                 Destroy(gameObject);
-            }   
+            }
+            
         }
         private void Start()
         {
-            if(GetlevelStatus(Levels[0]) == LevelStatus.Locked)
+            for (int i = 0; i < Levels.Length; i++)
+            {
+                SetLevelStatus(Levels[i], LevelStatus.Locked);
+            }
+            if (GetlevelStatus(Levels[0]) == LevelStatus.Locked)
             {
                 SetLevelStatus(Levels[0], LevelStatus.Unlocked);
             }

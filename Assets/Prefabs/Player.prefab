@@ -201,6 +201,7 @@ MonoBehaviour:
   scoreController: {fileID: 0}
   gameOverController: {fileID: 0}
   health: {fileID: 2881709187562874891}
+  recoilForce: 1
   extraJumpValue: 0
   groundCheck: {fileID: 1353132321}
   checkRadius: 0.5
