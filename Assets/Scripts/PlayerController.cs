@@ -11,9 +11,15 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float jump;
     public ScoreController scoreController;
+    public ScoreControllerP scoreControllerp;
+    public ScoreControllerH scoreControllerh;
     public GameOverController gameOverController;
     public Health health;
     public float recoilForce;
+    private bool attack;
+    public Transform attackPos;
+    public float attackRange;
+    public LayerMask whatIsEnemies;
 
     private int extraJumps;
     public int extraJumpValue;
@@ -54,26 +60,27 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
         float horizontal = Input.GetAxisRaw("Horizontal");
-        //float vertical = Input.GetAxisRaw("Jump");
         MoveCharacter(horizontal);
         PlayMovementAnimation(horizontal);
         PlayCrouchAnimation();
-        //PlayJumpAnimation(vertical);
+        HandleAttacks();
+        ResetValues();
     }
     public void PickUpKey()
     {
-        scoreController.IncreaseScore(10);
+        scoreController.IncreaseScoreKey(1);
+    }
+    public void PickUpPizza()
+    {
+        scoreControllerp.IncreaseScorePizza(1);
+    }
+    public void PickUpHotWings()
+    {
+        scoreControllerh.IncreaseScoreHW(1);
     }
     private void Update()
     {
-        bool vertical = Input.GetKeyDown(KeyCode.Space);
-        if (vertical) 
-        {
-            PlayerJump();
-            animator.SetBool("Jump", true);
-        }
-
-        
+        HandleInput();
     }
 
     private void PlayerJump()
@@ -96,7 +103,10 @@ public class PlayerController : MonoBehaviour
     private void MoveCharacter(float horizontal)
     {
         Vector2 position = transform.position;
-        position.x += horizontal * movementSpeed * Time.deltaTime;
+        if (!this.animator.GetCurrentAnimatorStateInfo(0).IsTag("Melee"))
+        {
+            position.x += horizontal * movementSpeed * Time.deltaTime;
+        }
         transform.position = position;
         lookDir = Camera.main.ScreenToWorldPoint(position);
     }
@@ -110,6 +120,31 @@ public class PlayerController : MonoBehaviour
         scale = transform.localScale;
         scale.x = (horizontal < 0 ? -1 : (horizontal>0?1:scale.x)) * Mathf.Abs(scale.x);
         transform.localScale = scale;
+    }
+    private void HandleAttacks()
+    {
+        if(attack && !this.animator.GetCurrentAnimatorStateInfo(0).IsTag("Melee"))
+        {
+            animator.SetTrigger("Melee");
+        }
+    }
+    private void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            attack = true;
+            Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+            for (int i = 0; i < enemiesToDamage.Length; i++)
+            {
+                enemiesToDamage[i].GetComponent<EnemyController>().TakeDamage();
+            }
+        }
+        bool vertical = Input.GetKeyDown(KeyCode.Space);
+        if (vertical)
+        {
+            PlayerJump();
+            animator.SetBool("Jump", true);
+        }
     }
     public void HurtAnimationFalse()
     {
@@ -134,5 +169,14 @@ public class PlayerController : MonoBehaviour
     public void PlayerDead()
     {
         gameOverController.PlayerDied();
+    }
+    private void ResetValues()
+    {
+        attack = false;
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }
 }

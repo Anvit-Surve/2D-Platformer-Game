@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     public float speed;
     public bool movingRight;
-    
+    public Animator animator;
     public Transform groundDetection;
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -35,5 +35,11 @@ public class EnemyController : MonoBehaviour
                 movingRight = true;
             }
         }
+    }
+
+    public void TakeDamage()
+    {
+        animator.SetTrigger("Die");
+        Destroy(this.gameObject, 0.5f);
     }
 }

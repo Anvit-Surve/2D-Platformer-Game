@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
 
-public class ScoreController : MonoBehaviour
+public class ScoreControllerH : MonoBehaviour
 {
     private TextMeshProUGUI scoreText;
-    
-    private int scoreK = 0;
-    public int Keys;
+
+    private int scoreH = 0;
+    public int HotWings;
 
     private void Awake()
     {
@@ -18,22 +17,22 @@ public class ScoreController : MonoBehaviour
 
     private void Start()
     {
-        RefreshUIK();
+        RefreshUIH();
     }
 
-    public void IncreaseScoreKey(int increment)
+    public void IncreaseScoreHW(int increment)
     {
-        scoreK += increment;
-        RefreshUIK();
+        scoreH += increment;
+        RefreshUIH();
     }
-    private void RefreshUIK()
+    private void RefreshUIH()
     {
-        scoreText.text = $": {scoreK}/{Keys}";
+        scoreText.text = $": {scoreH}/{HotWings}";
     }
 
     public bool Score()
     {
-        if (scoreK >= Keys)
+        if (scoreH >= HotWings)
         {
             return true;
         }

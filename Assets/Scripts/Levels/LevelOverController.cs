@@ -9,9 +9,13 @@ namespace Assets.Scripts.Levels
     public class LevelOverController : MonoBehaviour
     {
         public LevelCompleteController Levelcompletecontroller;
+        public ScoreController scorecontroller;
+        public ScoreControllerP scorecontrollerP;
+        public ScoreControllerH scorecontrollerH;
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.GetComponent<PlayerController>())
+            if (collision.gameObject.GetComponent<PlayerController>() && scorecontroller.Score() && scorecontrollerP.Score() && scorecontrollerH.Score())
             {
                 Debug.Log("Level Finished");
                 Levelcompletecontroller.PlayerWon();
