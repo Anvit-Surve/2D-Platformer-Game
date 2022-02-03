@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Key
+  - HW
+  - Pizza
   layers:
   - Default
   - TransparentFX
@@ -18,7 +21,7 @@ TagManager:
   - Platform
   - Enemy
   - Key
-  - 
+  - Ground
   - 
   - 
   - 

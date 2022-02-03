@@ -7,8 +7,9 @@ using System;
 public class ScoreController : MonoBehaviour
 {
     private TextMeshProUGUI scoreText;
-
-    private int score = 0;
+    
+    private int scoreK = 0;
+    public int Keys;
 
     private void Awake()
     {
@@ -17,17 +18,25 @@ public class ScoreController : MonoBehaviour
 
     private void Start()
     {
-        RefreshUI();
+        RefreshUIK();
     }
 
-    public void IncreaseScore(int increment)
+    public void IncreaseScoreKey(int increment)
     {
-        score += increment;
-        RefreshUI();
+        scoreK += increment;
+        RefreshUIK();
+    }
+    private void RefreshUIK()
+    {
+        scoreText.text = $": {scoreK}/{Keys}";
     }
 
-    private void RefreshUI()
+    public bool Score()
     {
-        scoreText.text = "Score: " + score;
+        if (scoreK >= Keys)
+        {
+            return true;
+        }
+        return false;
     }
 }
