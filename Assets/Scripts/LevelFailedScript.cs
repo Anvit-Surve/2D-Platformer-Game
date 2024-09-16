@@ -5,13 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelFailedScript : MonoBehaviour
 {
-    public int Respawn;
+    public PlayerController playerController;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerController>())
         {
-            Debug.Log("Level Failed");
-            SceneManager.LoadScene(Respawn);
+            playerController.KillPlayer();
         }
     }
 }
