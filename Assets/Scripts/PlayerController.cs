@@ -6,21 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     public Animator animator;
     private Rigidbody2D rb2d;
-    public float speed;
+    public float movementSpeed;
     public float jump;
     private void Awake()
     {
-        Debug.Log("Player Controller Awake");
         rb2d = gameObject.GetComponent<Rigidbody2D>();
     }
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    Debug.Log("Collision: " + collision.gameObject.name);
-    //}
-
-
-    private void Update()
+    private void FixedUpdate()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Jump");
@@ -30,10 +22,14 @@ public class PlayerController : MonoBehaviour
         PlayJumpAnimation(vertical);
     }
 
+    private void Update()
+    {
+        
+    }
     private void MoveCharacter(float horizontal, float vertical)
     {
         Vector2 position = transform.position;
-        position.x += horizontal * speed * Time.deltaTime;
+        position.x += horizontal * movementSpeed * Time.deltaTime;
         transform.position = position;
 
         if (vertical > 0)
@@ -41,50 +37,19 @@ public class PlayerController : MonoBehaviour
             rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
         }
     }
-
     private void PlayJumpAnimation(float vertical)
     {
-        if (vertical > 0)
-        {
-            animator.SetBool("Jump", true);
-        }
-        else
-        {
-            animator.SetBool("Jump", false);
-        }
-
-        //bool Jump = Input.GetKey("space");
-        //if(Jump)
-        //{
-        //    animator.SetBool("Jump", true);
-        //}
+        animator.SetBool("Jump", vertical > 0);        
     }
-
     private void PlayCrouchAnimation()
     {
-        bool Crouch = Input.GetKey(KeyCode.LeftControl);
-        if (Crouch)
-        {
-            animator.SetBool("Crouch", true);
-        }
-        else
-        {
-            animator.SetBool("Crouch", false);
-        }
+        animator.SetBool("Crouch", Input.GetKey(KeyCode.LeftControl));
     }
-
     private void PlayMovementAnimation(float horizontal)
     {
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
         Vector3 scale = transform.localScale;
-        if (horizontal < 0)
-        {
-            scale.x = -1f * Mathf.Abs(scale.x);
-        }
-        else if (horizontal > 0)
-        {
-            scale.x = Mathf.Abs(scale.x);
-        }
+        scale.x = (horizontal < 0 ? -1 : (horizontal>0?1:scale.x)) * Mathf.Abs(scale.x);
         transform.localScale = scale;
     }
 }
